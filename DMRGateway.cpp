@@ -394,6 +394,8 @@ int CDMRGateway::run()
 
 	LogMessage("DMRGateway-%s is running", VERSION);
 
+	int selected_network = 0;
+
 	while (!m_killed) {
 		if (m_xlxNetwork != NULL) {
 			bool connected = m_xlxNetwork->isConnected();
@@ -475,6 +477,11 @@ int CDMRGateway::run()
 			unsigned int srcId = data.getSrcId();
 			unsigned int dstId = data.getDstId();
 			FLCO flco = data.getFLCO();
+
+                        if(dstId >= 90000 && dstId <= 90005){
+                            LogDebug("TESTAA Network keyed: %d", dstId);
+                            selected_network = dstId-90000;
+                        }
 
 			if (flco == FLCO_GROUP && slotNo == m_xlxSlot && dstId == m_xlxTG) {
 				if (m_xlxReflector != m_xlxRoom || m_xlxNumber != m_xlxStartup)
@@ -560,6 +567,10 @@ int CDMRGateway::run()
 							break;
 						}
 					}
+                                         
+                                        if(!rewritten && selected_network==1){
+                                               rewritten = true;
+                                        }
 
 					if (rewritten) {
 						if (status[slotNo] == DMRGWS_NONE || status[slotNo] == DMRGWS_DMRNETWORK1) {
@@ -581,6 +592,9 @@ int CDMRGateway::run()
 								break;
 							}
 						}
+                                                if(!rewritten && selected_network==2){
+                                                       rewritten = true;
+                                                }
 
 						if (rewritten) {
 							if (status[slotNo] == DMRGWS_NONE || status[slotNo] == DMRGWS_DMRNETWORK2) {
@@ -666,6 +680,10 @@ int CDMRGateway::run()
 								break;
 							}
 						}
+                                                if(!rewritten && selected_network==3){
+                                                        rewritten = true;
+                                                }
+
 
 						if (rewritten) {
 							if (status[slotNo] == DMRGWS_NONE || status[slotNo] == DMRGWS_DMRNETWORK3) {
@@ -730,6 +748,10 @@ int CDMRGateway::run()
 						break;
 					}
 				}
+                                if(!rewritten && selected_network==1){
+                                        rewritten = true;
+                                }
+
 
 				if (rewritten) {
 					// Check that the rewritten slot is free to use.
@@ -779,6 +801,11 @@ int CDMRGateway::run()
 					}
 				}
 
+                                if(!rewritten && selected_network==2){
+                                        rewritten = true;
+                                }
+
+
 				if (rewritten) {
 					// Check that the rewritten slot is free to use.
 					slotNo = data.getSlotNo();
@@ -826,6 +853,11 @@ int CDMRGateway::run()
 						break;
 					}
 				}
+
+                                if(!rewritten && selected_network==3){
+                                        rewritten = true;
+                                }
+
 
 				if (rewritten) {
 					// Check that the rewritten slot is free to use.
