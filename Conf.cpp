@@ -610,7 +610,22 @@ bool CConf::read()
                                         rewrite.m_range    = ::atoi(p5);
                				m_dmrNetwork4TGRewrites.push_back(rewrite);
                                 }
-                        } else if (::strncmp(key, "TypeRewrite", 11U) == 0) {
+          			} else if (::strncmp(key, "PCRewrite", 9U) == 0) {
+				char* p1 = ::strtok(value, ", ");
+				char* p2 = ::strtok(NULL, ", ");
+				char* p3 = ::strtok(NULL, ", ");
+				char* p4 = ::strtok(NULL, ", ");
+				char* p5 = ::strtok(NULL, " \r\n");
+				if (p1 != NULL && p2 != NULL && p3 != NULL && p4 != NULL && p5 != NULL) {
+					CPCRewriteStruct rewrite;
+					rewrite.m_fromSlot = ::atoi(p1);
+					rewrite.m_fromId   = ::atoi(p2);
+					rewrite.m_toSlot   = ::atoi(p3);
+					rewrite.m_toId     = ::atoi(p4);
+					rewrite.m_range    = ::atoi(p5);
+					m_dmrNetwork4PCRewrites.push_back(rewrite);
+				}
+              } else if (::strncmp(key, "TypeRewrite", 11U) == 0) {
                                 char* p1 = ::strtok(value, ", ");
                                 char* p2 = ::strtok(NULL, ", ");
                                 char* p3 = ::strtok(NULL, ", ");
@@ -681,7 +696,22 @@ bool CConf::read()
                                         rewrite.m_range    = ::atoi(p5);
                                         m_dmrNetwork5TGRewrites.push_back(rewrite);
                                 }
-                        } else if (::strncmp(key, "TypeRewrite", 11U) == 0) {
+                       			} else if (::strncmp(key, "PCRewrite", 9U) == 0) {
+				char* p1 = ::strtok(value, ", ");
+				char* p2 = ::strtok(NULL, ", ");
+				char* p3 = ::strtok(NULL, ", ");
+				char* p4 = ::strtok(NULL, ", ");
+				char* p5 = ::strtok(NULL, " \r\n");
+				if (p1 != NULL && p2 != NULL && p3 != NULL && p4 != NULL && p5 != NULL) {
+					CPCRewriteStruct rewrite;
+					rewrite.m_fromSlot = ::atoi(p1);
+					rewrite.m_fromId   = ::atoi(p2);
+					rewrite.m_toSlot   = ::atoi(p3);
+					rewrite.m_toId     = ::atoi(p4);
+					rewrite.m_range    = ::atoi(p5);
+					m_dmrNetwork5PCRewrites.push_back(rewrite);
+				}
+			 } else if (::strncmp(key, "TypeRewrite", 11U) == 0) {
                                 char* p1 = ::strtok(value, ", ");
                                 char* p2 = ::strtok(NULL, ", ");
                                 char* p3 = ::strtok(NULL, ", ");

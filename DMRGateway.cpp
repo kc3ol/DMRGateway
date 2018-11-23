@@ -226,6 +226,12 @@ CDMRGateway::~CDMRGateway()
 	for (std::vector<CRewrite*>::iterator it = m_dmr3Passalls.begin(); it != m_dmr3Passalls.end(); ++it)
 		delete *it;
 
+	for (std::vector<CRewrite*>::iterator it = m_dmr4Passalls.begin(); it != m_dmr4Passalls.end(); ++it)
+		delete *it;
+
+	for (std::vector<CRewrite*>::iterator it = m_dmr5Passalls.begin(); it != m_dmr5Passalls.end(); ++it)
+		delete *it;
+
 	delete m_rptRewrite;
 	delete m_xlxRewrite;
 
@@ -1144,8 +1150,8 @@ int CDMRGateway::run()
 				m_dmrNetwork3->writeRadioPosition(buffer, length);
 			if (m_dmrNetwork4 != NULL)
 				m_dmrNetwork4->writeRadioPosition(buffer, length);
-			if (m_dmrNetwork3 != NULL)
-				m_dmrNetwork4->writeRadioPosition(buffer, length);
+			if (m_dmrNetwork5 != NULL)
+				m_dmrNetwork5->writeRadioPosition(buffer, length);
 		}
 		ret = m_repeater->readTalkerAlias(buffer, length);
 		if (ret) {
