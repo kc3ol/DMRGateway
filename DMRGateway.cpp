@@ -62,10 +62,8 @@ static int sigcnt = 0;
 #if !defined(_WIN32) && !defined(_WIN64)
 static void sigHandler(int signum)
 {
-	if (signum == 15 &&  sigcnt >=2){
-		m_killed = true;
-		m_signal = signum;
- 		if (sigcnt<3) signum=0;		
+	if (signum == 15 &&  sigcnt <3){
+ 		signum=0;		
 	} else {
 		m_killed = true;
 		m_signal = signum;
