@@ -57,12 +57,20 @@ const unsigned char COLOR_CODE = 3U;
 
 static bool m_killed = false;
 static int  m_signal = 0;
+static int sigcnt = 0;
 
 #if !defined(_WIN32) && !defined(_WIN64)
 static void sigHandler(int signum)
 {
-	m_killed = true;
-	m_signal = signum;
+	if (signum == 15 &&  sigcnt >=2){
+		m_killed = true;
+		m_signal = signum;
+ 		if (sigcnt<3) signum=0;		
+	} else {
+		m_killed = true;
+		m_signal = signum;
+        	++sigcnt;
+	}
 }
 #endif
 
@@ -72,6 +80,7 @@ enum DMRGW_STATUS {
 	DMRGWS_DMRNETWORK2,
 	DMRGWS_DMRNETWORK3,
 	DMRGWS_DMRNETWORK4,
+	DMRGWS_DMRNETWORK5,
 	DMRGWS_XLXREFLECTOR
 };
 
@@ -79,6 +88,7 @@ const char* HEADER1 = "This software is for use on amateur radio networks only,"
 const char* HEADER2 = "it is to be used for educational purposes only. Its use on";
 const char* HEADER3 = "commercial networks is strictly prohibited.";
 const char* HEADER4 = "Copyright(C) 2017 by Jonathan Naylor, G4KLX and others";
+const char* HEADER5 = "    Beta Version 2018/12/07 VE3RD";
 
 int main(int argc, char** argv)
 {
@@ -304,6 +314,7 @@ int CDMRGateway::run()
 	LogInfo(HEADER2);
 	LogInfo(HEADER3);
 	LogInfo(HEADER4);
+	LogInfo(HEADER5);
 
 	LogMessage("DMRGateway-%s is starting", VERSION);
 	LogMessage("Built %s %s (GitID #%.7s)", __TIME__, __DATE__, gitversion);
@@ -419,7 +430,7 @@ int CDMRGateway::run()
 
 	LogMessage("DMRGateway-%s is running", VERSION);
 
-	int selected_network = 0;
+	int selected_network = 4;
 
 	while (!m_killed) {
 		if (m_xlxNetwork != NULL) {
