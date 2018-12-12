@@ -34,13 +34,31 @@ Location=Nowhere
 Description=Multi-Mode Repeater
 URL=www.google.co.uk
 
+[XLX Network]
+Enabled=1
+File=XLXHosts.txt
+Port=62030
+Password=passw0rd
+ReloadTime=60
+# Local=3351
+Slot=1
+TG=6
+Base=64000
+Startup=950
+Relink=10
+Debug=0
+#Allow user linking control using Private Calls
+UserControl=1
+#Override default module for startup reflector
+#Module=A
+
 # BrandMeister
 [DMR Network 1]
 Enabled=0
 Name=BM
 Address=44.131.4.1
 Port=62031
-Local=62037
+# Local=3352
 # Local cluster
 TGRewrite=1,9,1,9,1
 # Reflector TG on to slot 2 TG9
@@ -85,39 +103,9 @@ Enabled=0
 Name=HBLink
 Address=44.131.4.2
 Port=55555
-Local=3352
+# Local=3352
 # Local area TG on to slot 2 TG11
 TGRewrite=2,11,2,11,1
 Password=PASSWORD
 Location=0
 Debug=0
-
-# TGIF_Network
-[DMR Network 4]
-Enabled=1
-Name=TGIF_Network
-Address=tgif.network
-Port=62031
-Local=62035
-Password=passw0rd
-Location=1
-Debug=0
-
-[XLX Network]
-Enabled=1
-File=XLXHosts.txt
-Port=62030
-Password=passw0rd
-ReloadTime=60
-# Local=3351
-Slot=1
-TG=6
-Base=64000
-Startup=950
-Relink=10
-Debug=0
-#Allow user linking control using Private Calls
-UserControl=1
-#Override default module for startup reflector
-#Module=A
-

@@ -1,1 +1,2 @@
-const char *gitversion = "c730dec8f11c7b42d694d911984c6623ea171af8";
+// File contains Git commit ID SHA1 present at buildtime (prebuild.cmd) 
+const char *gitversion = "0000000000000000000000000000000000000000"; 
