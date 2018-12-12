@@ -56,13 +56,18 @@ const unsigned char COLOR_CODE = 3U;
 static bool m_killed = false;
 static int  m_signal = 0;
 int selected_network = 4;
-	
+int sigcnt =0;
+
 #if !defined(_WIN32) && !defined(_WIN64)
 static void sigHandler(int signum)
 {
-	m_killed = true;
-	m_signal = signum;
-	LogMessage("DMRGateway Stopping on signum: %d", signum);
+       if ( signum == 15 && sigcnt <3 ){
+                ++sigcnt;
+        } else {
+                m_killed = true;
+                m_signal = signum;
+                LogMessage("DMRGateway Stopping on signum: %d", signum);
+        }
 
 }
 #endif
