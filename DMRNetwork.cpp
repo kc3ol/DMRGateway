@@ -30,7 +30,6 @@ const unsigned int BUFFER_LENGTH = 500U;
 
 const unsigned int HOMEBREW_DATA_PACKET_LENGTH = 55U;
 
-
 CDMRNetwork::CDMRNetwork(const std::string& address, unsigned int port, unsigned int local, unsigned int id, const std::string& password, const std::string& name, const char* version, bool debug) :
 m_address(),
 m_port(port),
@@ -220,9 +219,10 @@ bool CDMRNetwork::write(const CDMRData& data)
 
 	buffer[54U] = data.getRSSI();
 
-	if (m_debug) 
-		CUtils::dump(1U, "Network Transmitted", buffer, HOMEBREW_DATA_PACKET_LENGTH);
-
+	if (m_debug)  {
+		CUtils::dump(1U, "RF Received - Network Transmitted", buffer, HOMEBREW_DATA_PACKET_LENGTH);
+		LogMessage("  TG: %d ", dstId);
+	}
 	write(buffer, HOMEBREW_DATA_PACKET_LENGTH);
 
 	return true;

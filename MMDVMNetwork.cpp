@@ -30,7 +30,6 @@ const unsigned int BUFFER_LENGTH = 500U;
 
 const unsigned int HOMEBREW_DATA_PACKET_LENGTH = 55U;
 
-
 CMMDVMNetwork::CMMDVMNetwork(const std::string& rptAddress, unsigned int rptPort, const std::string& localAddress, unsigned int localPort, bool debug) :
 m_rptAddress(),
 m_rptPort(rptPort),
@@ -127,6 +126,7 @@ bool CMMDVMNetwork::read(CDMRData& data)
 
 	FLCO flco = (m_buffer[15U] & 0x40U) == 0x40U ? FLCO_USER_USER : FLCO_GROUP;
 
+
 	unsigned int streamId;
 	::memcpy(&streamId, m_buffer + 16U, 4U);
 
@@ -216,7 +216,6 @@ bool CMMDVMNetwork::write(const CDMRData& data)
 
 	if (m_debug)
 		CUtils::dump(1U, "Transmitted out RF", buffer, HOMEBREW_DATA_PACKET_LENGTH);
-
 	m_socket.write(buffer, HOMEBREW_DATA_PACKET_LENGTH, m_rptAddress, m_rptPort);
 
 	return true;
@@ -302,8 +301,7 @@ void CMMDVMNetwork::clock(unsigned int ms)
 	if (length > 0 && m_rptAddress.s_addr == address.s_addr && m_rptPort == port) {
 		if (::memcmp(m_buffer, "DMRD", 4U) == 0) {
 			if (m_debug)
-				CUtils::dump(1U, "RF Received - Sent Out to Network", m_buffer, length);
-
+				CUtils::dump(1U, "RF Received  - Sent Out to Network", m_buffer, length);
 			unsigned char len = length;
 			m_rxData.addData(&len, 1U);
 			m_rxData.addData(m_buffer, len);
