@@ -57,7 +57,7 @@ const unsigned char COLOR_CODE = 3U;
 
 static bool m_killed = false;
 static int  m_signal = 0;
-unsigned int selected_network = 0;
+unsigned int selected_network = 4;
 
 #if !defined(_WIN32) && !defined(_WIN64)
 static void sigHandler(int signum)
@@ -768,7 +768,7 @@ int CDMRGateway::run()
 						}
 	
 						if(!rewritten && selected_network==2){
-								LogMessage("Network 2 Passall  TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 2 Passall  TG: %d Net:%d ", dstId,selected_network);
 							rewritten = true;
 						}
 						if (rewritten) {
@@ -837,8 +837,8 @@ int CDMRGateway::run()
 						for (std::vector<CRewrite*>::iterator it = m_dmr5Passalls.begin(); it != m_dmr5Passalls.end(); ++it) {
 							bool ret = (*it)->process(data, trace);
 							if (ret) {
-								rewritten = true;
-						//		break;
+						//		rewritten = true;
+								break;
 							}
 						}
 	
@@ -907,7 +907,7 @@ int CDMRGateway::run()
 					bool ret = (*it)->process(data, trace);
 					if (ret) {
 					//	rewritten = true;
-					//	break;
+						break;
 					}
 				}
                                 if(!rewritten && selected_network==1){
@@ -960,12 +960,12 @@ int CDMRGateway::run()
 					bool ret = (*it)->process(data, trace);
 					if (ret) {
 				//		rewritten = true;
-				//		break;
+						break;
 					}
 				}
 
                                 if(!rewritten && selected_network==2){
-  				LogMessage("Network 2 Net Trans  TG: %d Net:%d ", dstId,selected_network);
+ 	 				LogMessage("Network 2 Net Trans  TG: %d Net:%d ", dstId,selected_network);
                                       rewritten = true;
                                 }
 
@@ -1013,12 +1013,13 @@ int CDMRGateway::run()
 				for (std::vector<CRewrite*>::iterator it = m_dmr3NetRewrites.begin(); it != m_dmr3NetRewrites.end(); ++it) {
 					bool ret = (*it)->process(data, trace);
 					if (ret) {
-						rewritten = true;
+				//		rewritten = true;
 						break;
 					}
 				}
 
 					if(!rewritten && selected_network==3){
+  						LogMessage("Network 3 Net Trans  TG: %d Net:%d ", dstId,selected_network);
 							rewritten = true;
 					}
 
@@ -1067,7 +1068,7 @@ int CDMRGateway::run()
 					bool ret = (*it)->process(data, trace);
 					if (ret) {
 				//		rewritten = true;
-				//		break;
+						break;
 					}
 				}
 
@@ -1119,13 +1120,14 @@ int CDMRGateway::run()
 				for (std::vector<CRewrite*>::iterator it = m_dmr5NetRewrites.begin(); it != m_dmr5NetRewrites.end(); ++it) {
 					bool ret = (*it)->process(data, trace);
 					if (ret) {
-						rewritten = true;
+				//		rewritten = true;
 						break;
 					}
 				}
 
                                 if(!rewritten && selected_network==5){
-                                        rewritten = true;
+           				LogMessage("Network 5 Net Trans  TG: %d Net:%d ", dstId,selected_network);
+	                               rewritten = true;
                                 }
 
 
