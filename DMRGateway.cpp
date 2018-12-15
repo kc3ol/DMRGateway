@@ -58,12 +58,19 @@ const unsigned char COLOR_CODE = 3U;
 static bool m_killed = false;
 static int  m_signal = 0;
 unsigned int selected_network = 4;
+unsigned int sigcnt =0;
+
 
 #if !defined(_WIN32) && !defined(_WIN64)
 static void sigHandler(int signum)
 {
-	m_killed = true;
-	m_signal = signum;
+	if ( signum == 15 && sigcnt < 2 ) {
+		++sigcnt;
+          	LogMessage("SIGTERM 15 Received - Cnt: %d  Ignored",sigcnt);
+	} else {
+		m_killed = true;
+		m_signal = signum;
+	}
 }
 #endif
 
@@ -615,7 +622,7 @@ int CDMRGateway::run()
                                          
 					if(!rewritten && selected_network==1){
 						   rewritten = true;
-						LogMessage("Network 1 RF Out TG: %d Net:%d ", dstId,selected_network);
+						LogMessage("Network 1 RF Out TG: %d ", dstId);
 					}
 
 					if (rewritten) {
@@ -639,7 +646,7 @@ int CDMRGateway::run()
 							}
 						}
 						if(!rewritten && selected_network==2){
-							LogMessage("Network 2 RF Out TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 2 RF Out TG: %d ", dstId);
 							   rewritten = true;
 						}
 
@@ -665,7 +672,7 @@ int CDMRGateway::run()
 								}
 							}
 							if(!rewritten && selected_network==3){
-								LogMessage("Network 3 RF Out TG: %d Net:%d ", dstId,selected_network);
+								LogMessage("Network 3 RF Out TG: %d ", dstId);
 								   rewritten = true;
 							}
 							if (rewritten) {
@@ -690,7 +697,7 @@ int CDMRGateway::run()
 								}
 							}
 							if(!rewritten && selected_network==4){
-								LogMessage("Network 4 RF Out TG: %d Net:%d ", dstId,selected_network);
+								LogMessage("Network 4 RF Out TG: %d ",dstId);
 				   				rewritten = true;
 							}
 
@@ -715,7 +722,7 @@ int CDMRGateway::run()
 								}
 							}
 							if(!rewritten && selected_network==5){
-								LogMessage("Network 5 RF Out TG: %d Net:%d ", dstId,selected_network);
+								LogMessage("Network 5 RF Out TG: %d ", dstId);
 							 	rewritten = true;
 							}
 
@@ -744,7 +751,7 @@ int CDMRGateway::run()
 	
 						if(!rewritten && selected_network==1){
 								rewritten = true;
-							LogMessage("Network 1 Passall  TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 1 Passall  TG: %d ", dstId);
 						}
 						if (rewritten) {
 							if (status[slotNo] == DMRGWS_NONE || status[slotNo] == DMRGWS_DMRNETWORK1) {
@@ -768,7 +775,7 @@ int CDMRGateway::run()
 						}
 	
 						if(!rewritten && selected_network==2){
-							LogMessage("Network 2 Passall  TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 2 Passall  TG: %d ", dstId);
 							rewritten = true;
 						}
 						if (rewritten) {
@@ -792,7 +799,7 @@ int CDMRGateway::run()
 							}
 						}
 						if(!rewritten && selected_network==3){
-							LogMessage("Network 3 Passall  TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 3 Passall  TG: %d ", dstId);
 							rewritten = true;
 						}
 
@@ -819,7 +826,7 @@ int CDMRGateway::run()
 						}
 	
 						if(!rewritten && selected_network==4){
-							LogMessage("Network 4 Passall  TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 4 Passall  TG: %d ", dstId);
 							rewritten = true;
 						}
 						if (rewritten) {
@@ -843,7 +850,7 @@ int CDMRGateway::run()
 						}
 	
 						if(!rewritten && selected_network==5){
-							LogMessage("Network 5 Passall  TG: %d Net:%d ", dstId,selected_network);
+							LogMessage("Network 5 Passall  TG: %d ", dstId);
 							rewritten = true;
 						}
 						if (rewritten) {
@@ -912,7 +919,7 @@ int CDMRGateway::run()
 				}
                                 if(!rewritten && selected_network==1){
                                         rewritten = true;
- 					LogMessage("Network 1 Trans  TG: %d Net:%d ", dstId,selected_network);
+ 					LogMessage("Network 1 Trans  TG: %d ", dstId);
                                }
 
 
@@ -965,7 +972,7 @@ int CDMRGateway::run()
 				}
 
                                 if(!rewritten && selected_network==2){
- 	 				LogMessage("Network 2 Net Trans  TG: %d Net:%d ", dstId,selected_network);
+ 	 				LogMessage("Network 2 Net Trans  TG: %d ", dstId);
                                       rewritten = true;
                                 }
 
@@ -1019,7 +1026,7 @@ int CDMRGateway::run()
 				}
 
 					if(!rewritten && selected_network==3){
-  						LogMessage("Network 3 Net Trans  TG: %d Net:%d ", dstId,selected_network);
+  						LogMessage("Network 3 Net Trans  TG: %d  ", dstId);
 							rewritten = true;
 					}
 
@@ -1073,7 +1080,7 @@ int CDMRGateway::run()
 				}
 
                                 if(!rewritten && selected_network==4){
-   					LogMessage("Network 4 Net Trans  TG: %d Net:%d ", dstId,selected_network);
+   					LogMessage("Network 4 Net Trans  TG: %d  ", dstId);
                                        rewritten = true;
                                 }
 
@@ -1126,7 +1133,7 @@ int CDMRGateway::run()
 				}
 
                                 if(!rewritten && selected_network==5){
-           				LogMessage("Network 5 Net Trans  TG: %d Net:%d ", dstId,selected_network);
+           				LogMessage("Network 5 Net Trans  TG: %d ", dstId);
 	                               rewritten = true;
                                 }
 
